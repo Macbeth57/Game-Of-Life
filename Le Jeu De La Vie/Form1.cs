@@ -169,12 +169,3 @@ namespace Le_Jeu_De_La_Vie
 
     }
 }
-
-/*                      int debug0 = copyGridValues[i + 1][j];
-                        int debug1 = copyGridValues[i][j + 1];
-                        int debug2 = copyGridValues[i + 1][j + 1];
-                        int debug3 = copyGridValues[i - 1][j];
-                        int debug4 = copyGridValues[i][j - 1];
-                        int debug5 = copyGridValues[i - 1][j - 1];
-                        int debug6 = copyGridValues[i + 1][j - 1];
-                        int debug7 = copyGridValues[i - 1][j + 1];*/
