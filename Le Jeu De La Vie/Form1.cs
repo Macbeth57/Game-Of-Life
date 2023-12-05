@@ -75,7 +75,20 @@ namespace Le_Jeu_De_La_Vie
 
         private void GridRefresh()
         {
-            
+            for (int i = 1; i < gridValues.Count - 1; i++)
+            {
+                for (int j = 1; j < gridValues[i].Count - 1; j++)
+                {
+                    if (gridValues[i][j] == 0)
+                    {
+                        gridPanels[i, j].BackColor = Color.White;
+                    }
+                    else
+                    {
+                        gridPanels[i, j].BackColor = Color.Black;
+                    }
+                }
+            }
         }
 
         private void SetInterface()
@@ -115,41 +128,53 @@ namespace Le_Jeu_De_La_Vie
         {
 
             int totalValueNeighboors;
-            
+            int x = gridValues.Count;
+            int y = gridValues.Count;
+
+            int[,] copyGridValues = new int[x, y];
 
             while (isRunning)
             {
-
-                List<List<int>> copyGridValues = new List<List<int>>(gridValues);
+                for (int row = 0; row < x; row++)
+                {
+                    for (int column = 0; column < y; column++)
+                    {
+                        copyGridValues[row, column] = gridValues[row][column];
+                    }
+                }
 
                 for (int i = 1; i < gridValues.Count-1; i++)
                 {
                     for (int j = 1; j < gridValues[i].Count-1; j++)
                     {
 
-                        totalValueNeighboors = copyGridValues[i + 1][j] + copyGridValues[i][j + 1] + copyGridValues[i + 1][j + 1] + copyGridValues[i - 1][j] + copyGridValues[i][j - 1] + copyGridValues[i - 1][j - 1] + copyGridValues[i + 1][j - 1] + copyGridValues[i - 1][j + 1];
+                        totalValueNeighboors = copyGridValues[i + 1,j] + copyGridValues[i,j + 1] + copyGridValues[i + 1,j + 1] + copyGridValues[i - 1,j] + copyGridValues[i,j - 1] + copyGridValues[i - 1,j - 1] + copyGridValues[i + 1,j - 1] + copyGridValues[i - 1,j + 1];
 
-                        if (copyGridValues[i][j] == 1 && (totalValueNeighboors < 2 || totalValueNeighboors > 3)) 
+                        if (copyGridValues[i,j] == 1 && (totalValueNeighboors < 2 || totalValueNeighboors > 3)) 
                         {
                             gridValues[i][j] = 0;
-                            gridPanels[i, j].BackColor = Color.White;
                         }
-                        else if(copyGridValues[i][j] == 0 && totalValueNeighboors == 3)
+                        else if(copyGridValues[i,j] == 0 && totalValueNeighboors == 3)
                         {
                             gridValues[i][j] = 1;
-                            gridPanels[i, j].BackColor = Color.Black;
                         }
-                       
-
-                        totalValueNeighboors = 0;
-
                     }
                 }
 
-                await Task.Delay(500);
+                GridRefresh();
+                await Task.Delay(100);
 
             }
         }
 
     }
 }
+
+/*                      int debug0 = copyGridValues[i + 1][j];
+                        int debug1 = copyGridValues[i][j + 1];
+                        int debug2 = copyGridValues[i + 1][j + 1];
+                        int debug3 = copyGridValues[i - 1][j];
+                        int debug4 = copyGridValues[i][j - 1];
+                        int debug5 = copyGridValues[i - 1][j - 1];
+                        int debug6 = copyGridValues[i + 1][j - 1];
+                        int debug7 = copyGridValues[i - 1][j + 1];*/
